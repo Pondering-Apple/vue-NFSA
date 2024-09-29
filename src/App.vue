@@ -1,16 +1,19 @@
 <template>
-  <Header />
+  <menuBar />
   <CloudContainer />
+  <footerContents />
 </template>
 
 <script>
 import CloudContainer from './components/cloudContainer.vue'
-import Header from './components/header.vue'
+import menuBar from './components/header.vue'
+import footerContents from './components/footer.vue'
 
 export default {
   name: 'App',
   components: {
-    Header,
+    menuBar,
+    footerContents,
     CloudContainer
   }
 }

@@ -1,10 +1,13 @@
 <template>
-  <div class="container">
-    <tagCloud @click="toggleVisibility" />
-    <tagCloud @click="toggleVisibility" />
-    <tagCloud @click="toggleVisibility" />
+  <div class="title" v-if="tagCloudVisibility">
+    <h2 @click="changeVisibility">Back</h2>
+    <h2>Songs from [insert Country Here]</h2>
   </div>
-  <collectionDisplay v-if="isVisible" />
+  <div class="container" v-if="dynamicPageVisibility">
+    <tagCloud @click="changeVisibility" />
+  </div>
+
+  <collectionDisplay v-if="tagCloudVisibility" />
 </template>
 
 <script>
@@ -19,18 +22,29 @@ export default {
   },
   data() {
     return {
-      isVisible: false
+      tagCloudVisibility: false,
+      dynamicPageVisibility: true
     }
   },
   methods: {
-    toggleVisibility() {
-      this.isVisible = !this.isVisible
+    changeVisibility() {
+      this.dynamicPageVisibility = !this.dynamicPageVisibility
+      this.tagCloudVisibility = !this.tagCloudVisibility
     }
   }
 }
 </script>
 
 <style scoped>
+.title {
+  width: 100%;
+  text-align: center;
+  border-bottom: 5px;
+  text-align: center;
+}
+.title > h2 {
+  display: inline;
+}
 div.container {
   display: flex;
   flex-wrap: wrap;
