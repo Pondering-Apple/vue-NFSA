@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'Greet'
+  name: 'header'
 }
 </script>
 

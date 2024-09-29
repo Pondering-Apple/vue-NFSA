@@ -1,16 +1,16 @@
 <template>
-  <Greet />
+  <Header />
   <CloudContainer />
 </template>
 
 <script>
-import Greet from './components/Greet.vue'
 import CloudContainer from './components/cloudContainer.vue'
+import Header from './components/header.vue'
 
 export default {
   name: 'App',
   components: {
-    Greet,
+    Header,
     CloudContainer
   }
 }
