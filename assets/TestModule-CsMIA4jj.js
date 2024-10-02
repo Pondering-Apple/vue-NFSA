@@ -1,1 +1,0 @@
-import{_ as c}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{o as e,a as r,c as n}from"./index-B_iSEcVl.js";const a={name:"testModule"};function _(t,o,s,u,l,m){return e(),r("h2",null,"Test Module")}const p=c(a,[["render",_]]),i={__name:"TestModule",setup(t){return(o,s)=>(e(),n(p))}};export{i as default};
