@@ -12,7 +12,9 @@
 export default {
   name: 'HomePage',
 
-  data() {},
+  data() {
+    return {}
+  },
   methods: {
     directToItemList() {
       this.$router.push({
