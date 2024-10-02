@@ -1,23 +1,10 @@
-<template>
-  <menuBar />
-  <CloudContainer />
-  <footerContents />
-</template>
-
-<script>
-import CloudContainer from './components/cloudContainer.vue'
-import menuBar from './components/header.vue'
-import footerContents from './components/footer.vue'
-
-export default {
-  name: 'App',
-  components: {
-    menuBar,
-    footerContents,
-    CloudContainer
-  }
-}
+<script setup>
+import NavMenu from '@/components/NavMenu.vue'
 </script>
+
+<template>
+  <NavMenu />
+</template>
 
 <style>
 #app {

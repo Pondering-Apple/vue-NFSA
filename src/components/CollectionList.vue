@@ -1,11 +1,13 @@
 <template>
-  <div class="container">
-    <div class="imagePlaceHolder"></div>
-    <div class="itemInformation">
-      <h3>Item Title</h3>
-      <div class="itemLink">
-        <p>Start of Description</p>
-        <p><strong>Click for more...</strong></p>
+  <div class="collectionContainer">
+    <div class="itemContainer">
+      <div class="imagePlaceHolder"></div>
+      <div class="itemInformation">
+        <h3>Item Title</h3>
+        <div class="itemLink">
+          <p>Start of Description</p>
+          <p><strong>Click for more...</strong></p>
+        </div>
       </div>
     </div>
   </div>
@@ -17,9 +19,15 @@ export default {
 }
 </script>
 
-<style scoped>
-.container {
-  width: 100%;
+<style>
+.collectionContainer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+.itemContainer {
+  width: 80%;
   height: 20vh;
   display: flex;
   padding: 20px;

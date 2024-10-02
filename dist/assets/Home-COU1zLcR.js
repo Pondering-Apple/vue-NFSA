@@ -1,0 +1,1 @@
+import{_ as t}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c,o as _}from"./index-B_iSEcVl.js";const n={};function s(e,o,r,p,m,f){return null}const a=t(n,[["render",s]]),l={__name:"Home",setup(e){return(o,r)=>(_(),c(a))}};export{l as default};
