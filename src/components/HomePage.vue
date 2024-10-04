@@ -1,40 +1,67 @@
 <template>
-  <h2>Home Page</h2>
-  <main class="cloudContainer">
-    <div class="tagCloud" style="cursor: pointer" @click="directToItemList">
-      <h2>Click to view items</h2>
-      <h5>number of items</h5>
-    </div>
-  </main>
+  <div>Click on a country to find songs from that country.</div>
+  <p>Todays country is {{ country }}</p>
+  <div>
+    <svg viewBox="0 0 1010 666" style="width: 100%; height: auto" @click="handleCountryClick">
+      <g v-for="location in worldMap.locations" :key="location.id">
+        <path
+          :d="location.path"
+          :title="location.name"
+          :fill="getColor(location.id)"
+          stroke="black"
+          stroke-width="0.5"
+        />
+      </g>
+    </svg>
+    <component :is="currentComponent" v-if="currentComponent" />
+  </div>
 </template>
 
 <script>
-export default {
-  name: 'HomePage',
+import worldMap from '@svg-maps/world' // Import the default export
 
+export default {
   data() {
-    return {}
+    return {
+      worldMap, // Store the imported map object
+      currentComponent: null,
+      country: '',
+      populations: {
+        ad: 7, // Andorra
+        ae: 98241000, // United Arab Emirates
+        af: 40218230004, // Afghanistan
+        al: 2877790007 // Albania
+        // Add more country populations here...
+      }
+    }
   },
   methods: {
-    directToItemList() {
-      this.$router.push({
-        path: '/CollectionList'
-      })
+    handleCountryClick(event) {
+      const country = event.target.closest('path') // Get the clicked country element
+      if (country) {
+        const countryName = country.getAttribute('title') // Extract the country name
+        const encodedCountryName = encodeURIComponent(countryName) // Encode the country name
+        console.log(`Clicked on: ${countryName}`)
+
+        this.$router.push(`/CollectionList/${encodedCountryName}`) // Navigate to the country page
+
+        // Here you can navigate to another page or perform other actions based on the clicked country
+      }
+    },
+    getColor(countryId) {
+      const population = this.populations[countryId] || 0 // Get the population, default to 0
+
+      if (population < 100000) return 'lightgreen' // Low population
+      if (population < 1000000) return 'orange' // Medium population
+      return 'red' // High population
     }
   }
 }
 </script>
 
-<style scoped>
-main {
-  width: 100%;
-  height: 800px;
-  background: blue;
-}
-.tagCloud {
-  height: 100px;
-  width: 100px;
-  border: 1px solid black;
-  background-color: green;
+<style>
+svg {
+  width: 100%; /* Make the SVG responsive */
+  height: auto; /* Maintain aspect ratio */
 }
 </style>
