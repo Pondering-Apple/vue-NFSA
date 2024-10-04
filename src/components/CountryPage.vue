@@ -2,7 +2,7 @@
   <div>
     <h1>{{ countryName }}</h1>
     <p>This is the page for {{ countryName }}</p>
-    <p>Please Work</p>
+    <p>This aint workign dude</p>
     <!-- <div v-if="errorMessages">{{ errorMessages }}</div> -->
     <div>
       <h2>Songs from {{ countryName }}:</h2>
