@@ -38,6 +38,7 @@ export default {
     }
   },
   mounted() {
+    console.log('Is fetchSongsByCountry available?', typeof this.fetchSongsByCountry)
     this.fetchSongsByCountry(this.countryName)
   },
   methods: {
