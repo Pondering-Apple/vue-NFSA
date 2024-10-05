@@ -1,5 +1,5 @@
 <template>
-  <div class="collectionContainer">
+  <!-- <div class="collectionContainer">
     <div class="itemContainer">
       <div class="imagePlaceHolder"></div>
       <div class="itemInformation">
@@ -10,7 +10,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -20,7 +20,7 @@ export default {
 </script>
 
 <style>
-.collectionContainer {
+/* .collectionContainer {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -55,5 +55,5 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-}
+} */
 </style>

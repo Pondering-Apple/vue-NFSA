@@ -39,11 +39,19 @@ export default {
     handleCountryClick(event) {
       const country = event.target.closest('path') // Get the clicked country element
       if (country) {
-        const countryName = country.getAttribute('title') // Extract the country name
+        let countryName = country.getAttribute('title') // Extract the country name
         const encodedCountryName = encodeURIComponent(countryName) // Encode the country name
-        console.log(`Clicked on: ${countryName}`)
+        if (encodedCountryName == 'United%20States') {
+          this.encodedCountryName = 'U.S.A'
+          console.log(`Clicked on: U.S.A`)
 
-        this.$router.push(`/CollectionList/${encodedCountryName}`) // Navigate to the country page
+          this.$router.push(`/CollectionList/U.S.A`)
+        } else {
+          this.encodedCountryName = encodedCountryName
+          console.log(`Clicked on: ${countryName}`)
+
+          this.$router.push(`/CollectionList/${encodedCountryName}`)
+        } // Navigate to the country page
 
         // Here you can navigate to another page or perform other actions based on the clicked country
       }
