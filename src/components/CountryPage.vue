@@ -1,19 +1,17 @@
 <template>
-  <div>
-    <h1>{{ countryName }}</h1>
-    <p>This is the page for {{ countryName }}</p>
-    <!-- <div v-if="errorMessages">{{ errorMessages }}</div> -->
+  <!-- <h1>{{ countryName }}</h1>
+    <p>This is the page for {{ countryName }}</p> -->
+  <!-- <div v-if="errorMessages">{{ errorMessages }}</div> -->
+  <div class="container">
     <div>
       <h2>Songs from {{ countryName }}:</h2>
-      <div v-for="song in songs" :key="song.id" class="itemContainer">
-        <div v-if="(song.hasMedia = false)">
-          <p>This is where the image shall be</p>
+      <div class="grid-container">
+        <div v-for="song in songs" :key="song.id" class="itemContainer">
+          <p>Title: {{ song.title }}</p>
+          <p>Name: {{ song.name }}</p>
+          <p>Countries involved: {{ formatArray(song.countries) }}</p>
+          <p>Art Form: {{ formatArray(song.forms) }}</p>
         </div>
-        <p>{{ song.title }}</p>
-        <p>{{ song.countries }}</p>
-        <p>{{ song.forms }}</p>
-        <!-- <p>{{ song.parentTitle.genres }}</p> -->
-        <!-- <p>{{ song.productionDates.type }}</p> -->
       </div>
     </div>
   </div>
@@ -24,11 +22,7 @@ export default {
   name: 'CountryPage',
   data() {
     return {
-      songs: [
-        { id: 1, title: 'Song 1' },
-        { id: 2, title: 'Song 2' },
-        { id: 3, title: 'Song 3' }
-      ], // Initialize with a dummy song
+      songs: [], // Initialize with a dummy song
       errorMessages: null
     }
   },
@@ -59,42 +53,59 @@ export default {
         .catch((error) => {
           console.error('Error fetching Songs:', error)
           this.errorMessages = 'An error occurred while fetching songs'
+          alert('This country has no songs in the collection \n Please select another country')
+          window.history.back()
+          // LEAVE THESE COMMENTS IN. FOR SOME UNKNOWN REASON, THEY CHANGE THE BEHAVIOUR OF THE WEBSITE WHICH
+          // SHOULD BE ILLEGAL CONSIDERING THE CODE SHOULDN'T BE AFFECTED BY COMMENTS. ONLY GOD KNOWS WHY THIS IS HAPPENING.
+          // " I'M NOT EVEN JOKING. I'M NOT EVEN MAD. I'M JUST CONFUSED. I'M NOT EVEN SURE IF THIS
+          // IS A JOKE. I'M NOT EVEN SURE IF I'M ALIVE. I'M NOT EVEN SURE IF I'M A HUMAN " - Github Copilot 5/10/2024 after seeing my previous comment
         })
+    },
+    formatArray(arr) {
+      if (!Array.isArray(arr)) return arr // If it's not an array, return as is
+      return arr.join(', ') // Join the array into a string with a comma separator
     }
   }
 }
 </script>
 
 <style scoped>
-template {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
+.container {
+  display: flex; /* Use flexbox */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center horizontally */
+  width: 100vw; /* Full width */
+  height: auto; /* Adjust height based on content */
+  text-align: center; /* Center text inside */
 }
-.collectionContainer {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
+.grid-container {
+  display: grid; /* Use CSS Grid */
+  grid-template-columns: repeat(3, 1fr); /* Create 2 equal columns */
+  gap: 20px; /* Add space between the columns */
+  width: 100%;
+  max-width: 1200px; /* Optional: set a max width */
+  margin: 0 auto; /* Center the grid horizontally */
 }
 .itemContainer {
-  width: 80%;
-  height: 20vh;
-  display: flex;
-  padding: 20px;
+  display: flex; /* Use flexbox for items */
+  flex-direction: column; /* Stack item details vertically */
+  justify-content: center; /* Center items vertically */
+  max-width: 600px; /* Optional: limit max width */
+  height: auto; /* Adjust height based on content */
   background-color: green;
-  border-left: 5px solid black;
-  border-right: 5px solid black;
+  padding: 20px;
   box-sizing: border-box;
+  margin-bottom: 10px; /* Add some spacing between items */
 }
+
+/* Other styles remain unchanged */
 .imagePlaceHolder {
   height: 100%;
   width: 25vh;
-  margin-right: 7%;
   display: inline-block;
   background-color: yellow;
 }
+
 .itemInformation {
   display: flex;
   flex-direction: column;
@@ -102,6 +113,7 @@ template {
   width: 90%;
   box-sizing: border-box;
 }
+
 .itemLink {
   width: 80%;
   display: flex;

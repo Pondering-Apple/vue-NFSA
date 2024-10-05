@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import TestModule from '@/views/TestModule.vue'
 import HomePage from '@/views/HomePage.vue'
-import CollectionList from '@/components/CollectionList.vue'
+// import CollectionList from '@/components/CollectionList.vue'
 import CountryPage from '@/components/CountryPage.vue'
 
 const router = createRouter({
