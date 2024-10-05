@@ -38,7 +38,7 @@ export default {
     this.fetchSongsByCountry(this.countryName)
   },
   methods: {
-    fetchSongsByCountry(countryName) {
+    fetchSongsByCountry() {
       const url = `https://api.collection.nfsa.gov.au/search?&query=songs&countries=Australia` // Encode the country name
       // ${encodeURIComponent(countryName)} This goes on the end of the url for dynamic country names
       fetch(url)
