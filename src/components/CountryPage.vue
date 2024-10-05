@@ -15,8 +15,6 @@
 </template>
 
 <script>
-import { errorMessages } from 'vue/compiler-sfc'
-
 export default {
   name: 'CountryPage',
   data() {
