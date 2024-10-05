@@ -2,7 +2,6 @@
   <div>
     <h1>{{ countryName }}</h1>
     <p>This is the page for {{ countryName }}</p>
-    <p>This aint workign dude</p>
     <!-- <div v-if="errorMessages">{{ errorMessages }}</div> -->
     <div>
       <h2>Songs from {{ countryName }}:</h2>
@@ -37,27 +36,28 @@ export default {
   },
   mounted() {
     this.fetchSongsByCountry(this.countryName)
+  },
+  methods: {
+    fetchSongsByCountry(countryName) {
+      const url = `https://api.collection.nfsa.gov.au/search?&query=songs&countries=Australia` // Encode the country name
+      // ${encodeURIComponent(countryName)} This goes on the end of the url for dynamic country names
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('Full API Response:', data) // Log the entire response
+          if (data.results && data.results.length) {
+            this.songs = data.results
+            console.log('Songs Assigned:', this.songs) // Verify songs are assigned
+          } else {
+            this.errorMessages = 'No songs found for this country'
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching Songs:', error)
+          this.errorMessages = 'An error occurred while fetching songs'
+        })
+    }
   }
-  // methods: {
-  //   fetchSongsByCountry(countryName) {
-  //     const url = `https://api.collection.nfsa.gov.au/search?&query=songs&countries=${encodeURIComponent(countryName)}` // Encode the country name
-  //     fetch(url)
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         console.log('Full API Response:', data) // Log the entire response
-  //         if (data.results && data.results.length) {
-  //           this.songs = data.results
-  //           console.log('Songs Assigned:', this.songs) // Verify songs are assigned
-  //         } else {
-  //           this.errorMessages = 'No songs found for this country'
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error('Error fetching Songs:', error)
-  //         this.errorMessages = 'An error occurred while fetching songs'
-  //       })
-  //   }
-  // }
 }
 </script>
 
