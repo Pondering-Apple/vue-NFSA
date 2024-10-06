@@ -1,16 +1,15 @@
 <template>
-  <!-- <h1>{{ countryName }}</h1>
-    <p>This is the page for {{ countryName }}</p> -->
-  <!-- <div v-if="errorMessages">{{ errorMessages }}</div> -->
   <div class="container">
     <div>
-      <h2>Songs from {{ countryName }}:</h2>
+      <h2 class="backMap" @click="goBack">&larr; Back to Map</h2>
+      <h2 class="countryIntro">Songs from {{ countryName }}:</h2>
       <div class="grid-container">
         <div v-for="song in songs" :key="song.id" class="itemContainer">
-          <p>Title: {{ song.title }}</p>
-          <p>Name: {{ song.name }}</p>
-          <p>Countries involved: {{ formatArray(song.countries) }}</p>
-          <p>Art Form: {{ formatArray(song.forms) }}</p>
+          <p><strong>Title:</strong> {{ song.title }}</p>
+          <p><strong>Name:</strong> {{ song.name }}</p>
+          <p><strong>Countries involved:</strong> {{ formatArray(song.countries) }}</p>
+          <p><strong>Language:</strong> {{ formatArray(song.languages) }}</p>
+          <p><strong>Art Form:</strong> {{ formatArray(song.forms) }}</p>
         </div>
       </div>
     </div>
@@ -22,7 +21,7 @@ export default {
   name: 'CountryPage',
   data() {
     return {
-      songs: [], // Initialize with a dummy song
+      songs: [], // Store the songs
       errorMessages: null
     }
   },
@@ -38,11 +37,11 @@ export default {
   methods: {
     fetchSongsByCountry(countryName) {
       const url = `https://api.collection.nfsa.gov.au/search?&query=songs&countries=${encodeURIComponent(countryName)}` // Encode the country name
-      // ${encodeURIComponent(countryName)} This goes on the end of the url for dynamic country names
+      // ${encodeURIComponent(countryName)} This goes on the end of the url for dynamic country names, it is here for debugging purposes
       fetch(url)
         .then((response) => response.json())
         .then((data) => {
-          console.log('Full API Response:', data) // Log the entire response
+          console.log('Full API Response:', data)
           if (data.results && data.results.length) {
             this.songs = data.results
             console.log('Songs Assigned:', this.songs) // Verify songs are assigned
@@ -55,15 +54,14 @@ export default {
           this.errorMessages = 'An error occurred while fetching songs'
           alert('This country has no songs in the collection \n Please select another country')
           window.history.back()
-          // LEAVE THESE COMMENTS IN. FOR SOME UNKNOWN REASON, THEY CHANGE THE BEHAVIOUR OF THE WEBSITE WHICH
-          // SHOULD BE ILLEGAL CONSIDERING THE CODE SHOULDN'T BE AFFECTED BY COMMENTS. ONLY GOD KNOWS WHY THIS IS HAPPENING.
-          // " I'M NOT EVEN JOKING. I'M NOT EVEN MAD. I'M JUST CONFUSED. I'M NOT EVEN SURE IF THIS
-          // IS A JOKE. I'M NOT EVEN SURE IF I'M ALIVE. I'M NOT EVEN SURE IF I'M A HUMAN " - Github Copilot 5/10/2024 after seeing my previous comment
         })
     },
     formatArray(arr) {
       if (!Array.isArray(arr)) return arr // If it's not an array, return as is
       return arr.join(', ') // Join the array into a string with a comma separator
+    },
+    goBack() {
+      window.history.back()
     }
   }
 }
@@ -71,53 +69,90 @@ export default {
 
 <style scoped>
 .container {
-  display: flex; /* Use flexbox */
-  flex-direction: column; /* Stack items vertically */
-  align-items: center; /* Center horizontally */
-  width: 100vw; /* Full width */
-  height: auto; /* Adjust height based on content */
-  text-align: center; /* Center text inside */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: auto;
+  text-align: center;
 }
 .grid-container {
   display: grid; /* Use CSS Grid */
-  grid-template-columns: repeat(3, 1fr); /* Create 2 equal columns */
+  grid-template-columns: repeat(3, 1fr); /* Create 3 equal columns */
   gap: 20px; /* Add space between the columns */
   width: 100%;
-  max-width: 1200px; /* Optional: set a max width */
-  margin: 0 auto; /* Center the grid horizontally */
+  max-width: 75%;
+  margin: 0 auto;
 }
 .itemContainer {
-  display: flex; /* Use flexbox for items */
+  display: flex;
   flex-direction: column; /* Stack item details vertically */
+  text-align: left;
   justify-content: center; /* Center items vertically */
-  max-width: 600px; /* Optional: limit max width */
-  height: auto; /* Adjust height based on content */
-  background-color: green;
+  max-width: 700px;
+  height: auto;
+  border: 3px solid black;
+  background-color: white;
   padding: 20px;
   box-sizing: border-box;
-  margin-bottom: 10px; /* Add some spacing between items */
+  margin-bottom: 10px;
+}
+.itemContainer > p {
+  margin-bottom: 10px;
 }
 
-/* Other styles remain unchanged */
-.imagePlaceHolder {
-  height: 100%;
-  width: 25vh;
-  display: inline-block;
-  background-color: yellow;
+.countryIntro {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+.backMap {
+  cursor: pointer;
+  position: absolute;
+  margin-top: 2rem;
+  margin-left: 2rem;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: bold;
+  text-decoration: underline;
 }
 
-.itemInformation {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 90%;
-  box-sizing: border-box;
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* Styles for tablets */
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr); /* Create 3 equal columns */
+  }
+  .countryIntro {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+  }
+  .backMap {
+    margin-top: 1.5rem;
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+  }
 }
-
-.itemLink {
-  width: 80%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+@media (max-width: 767px) {
+  /* Styles for phones */
+  .grid-container {
+    grid-template-columns: repeat(1, 1fr); /* Create 3 equal columns */
+  }
+  .countryIntro {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+  .backMap {
+    position: relative;
+    font-size: 1.7rem;
+    margin: 0;
+    margin-top: 1rem;
+  }
+  .container > div {
+    text-align: center;
+  }
 }
 </style>
