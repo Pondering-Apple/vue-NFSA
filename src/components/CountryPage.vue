@@ -12,6 +12,14 @@
           <p><strong>Art Form:</strong> {{ formatArray(song.forms) }}</p>
         </div>
       </div>
+      <div class="pageButtons">
+        <button class="previousPage" v-if="currentPage > 1" @click="fetchPreviousPage">
+          Previous Page
+        </button>
+        <button class="nextPage" v-if="currentPage < totalPages" @click="fetchNextPage">
+          Next Page
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -22,7 +30,9 @@ export default {
   data() {
     return {
       songs: [], // Store the songs
-      errorMessages: null
+      errorMessages: null,
+      currentPage: 1, // Start at page 1
+      totalPages: 10 // Total number of pages (to be updated from API)
     }
   },
   computed: {
@@ -36,7 +46,7 @@ export default {
   },
   methods: {
     fetchSongsByCountry(countryName) {
-      const url = `https://api.collection.nfsa.gov.au/search?&query=songs&countries=${encodeURIComponent(countryName)}` // Encode the country name
+      const url = `https://api.collection.nfsa.gov.au/search?&query=songs&countries=${encodeURIComponent(countryName)}&page=${this.currentPage}` // API url with country name and page number
       // ${encodeURIComponent(countryName)} This goes on the end of the url for dynamic country names, it is here for debugging purposes
       fetch(url)
         .then((response) => response.json())
@@ -55,6 +65,14 @@ export default {
           alert('This country has no songs in the collection \n Please select another country')
           window.history.back()
         })
+    },
+    fetchNextPage() {
+      this.currentPage += 1 // Increment the current page
+      this.fetchSongsByCountry(this.countryName) // Fetch the next page
+    },
+    fetchPreviousPage() {
+      this.currentPage -= 1 // Increment the current page
+      this.fetchSongsByCountry(this.countryName) // Fetch the next page
     },
     formatArray(arr) {
       if (!Array.isArray(arr)) return arr // If it's not an array, return as is
@@ -91,6 +109,7 @@ export default {
   justify-content: center; /* Center items vertically */
   max-width: 700px;
   height: auto;
+  border-radius: 3px;
   border: 3px solid black;
   background-color: white;
   padding: 20px;
@@ -117,7 +136,21 @@ export default {
   font-weight: bold;
   text-decoration: underline;
 }
-
+.pageButtons {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 2rem;
+}
+.previousPage,
+.nextPage {
+  font-size: 1.5rem;
+  padding: 1rem;
+  margin: 1rem;
+  border: 2px solid black;
+  background-color: white;
+  border-radius: 3px;
+  cursor: pointer;
+}
 @media (min-width: 768px) and (max-width: 1024px) {
   /* Styles for tablets */
   .grid-container {
